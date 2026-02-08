@@ -4,13 +4,15 @@ import hungerGames.strategys.Move;
 public abstract class Player {
     protected String name;
     protected int vitality;
+    protected String type;
     protected int x;
     protected int y;
     protected Move strategy;
 
-    public Player(String name, int vitality, int x, int y, Move strategy){
+    public Player(String name, int vitality, String type, int x, int y, Move strategy){
         this.name = name;
         this.vitality = vitality;
+        this.type = type;
         this.x = x;
         this.y = y;
         this.strategy = strategy;
@@ -27,6 +29,9 @@ public abstract class Player {
     }
     public int getVitality() {
         return vitality;
+    }
+    public String getType() {
+        return type;
     }
     public int getX() {
         return x;

@@ -1,5 +1,8 @@
+import hungerGames.*;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        HungerGames game = new HungerGames();
+        game.start();
     }
 }
