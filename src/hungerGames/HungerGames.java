@@ -14,7 +14,7 @@ public class HungerGames {
         Move preyStrategy = new PreyMove();
 
         this.hunter = new Hunter("H", 9, 0, hunterStrategy);
-        this.prey = new Prey("P", 5, 5, preyStrategy);
+        this.prey = new Prey("P", 8, 2, preyStrategy);
 
         board.placePlayer(hunter);
         board.placePlayer(prey);
@@ -23,6 +23,9 @@ public class HungerGames {
     public void start(){
         while (true) {
             board.printBoard();
+            System.out.println("DEBUG:");
+            System.out.println(" - Cazador en: " + hunter.getX() + "," + hunter.getY());
+            System.out.println(" - Presa en:   " + prey.getX() + "," + prey.getY());
 
             hunter.performMove(board);
             prey.performMove(board);

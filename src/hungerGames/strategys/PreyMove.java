@@ -23,7 +23,7 @@ public class PreyMove implements Move{
                 // Comprobación que es un hunter
                 if (posibleHunter != null && posibleHunter.getType().equals("Hunter")) {
                     // Calculamos distancia
-                    double distance = calculateDistance(p.getX(), posibleHunter.getX(), p.getY(), posibleHunter.getY());
+                    double distance = calculateDistance(p.getX(), p.getY(), posibleHunter.getX(), posibleHunter.getY());
                     // Si es menor reseteamo valores
                     if (distance < minDistance) {
                         hunter = posibleHunter;
@@ -44,7 +44,7 @@ public class PreyMove implements Move{
             // --- LÓGICA EJE X (Horizontal) ---
             if (hunter.getX() > currentX) {
                 nextX--; // Huye a la izquierda
-            } else {
+            } else if(hunter.getX() < currentX){
                 nextX++; // Huye a la derecha
             }
 
@@ -58,7 +58,7 @@ public class PreyMove implements Move{
             // --- LÓGICA EJE Y (Vertical) ---
             if (hunter.getY() > currentY) {
                 nextY--; // Huye hacia arriba
-            } else {
+            } else if (hunter.getY() < currentY){
                 nextY++; // Huye hacia abajo
             }
 

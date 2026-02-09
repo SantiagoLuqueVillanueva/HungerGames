@@ -34,7 +34,7 @@ public class Board {
 
     public void moveCharacter(Player p, int newX, int newY){
         // Comprobaciones
-        if ((newX < 0 || newX >= width || newX > height) || (newY < 0 || newY >= width || newY > height)) {
+        if ((newX < 0 || newX >= width) || (newY < 0 || newY >= height)) {
             return;
         }
         if (grid[newY][newX] != null) {
