@@ -32,36 +32,62 @@ public class Board {
         }
     }
 
-    public void moveCharacter(Player p, int newX, int newY){
-        // Comprobaciones
+    public void movePlayer(Player p, int newX, int newY){
         if ((newX < 0 || newX >= width) || (newY < 0 || newY >= height)) {
             return;
         }
-        if (grid[newY][newX] != null) {
-            return;
-        }
+
+        Player objective = grid[newY][newX];
         
-        // Movimiento
-        grid[p.getY()][p.getX()] = null;
-        p.setPosition(newX, newY);
-        grid[newY][newX] = p; 
+        if (objective == null) {
+            if (grid[p.getY()][p.getX()] == p) { 
+                grid[p.getY()][p.getX()] = null;
+            }
+            
+            p.setPosition(newX, newY);
+            grid[newY][newX] = p;
+        } 
+        else {
+            if (objective.getType().equals("Obstacle") || objective.getType().equals(p.getType())) {
+                return; 
+            }
+
+            double prob = (double) p.getVitality() / (objective.getVitality() + p.getVitality());
+
+            double random = Math.random();
+
+            if (random < prob) {
+                if (grid[p.getY()][p.getX()] == p) {
+                    grid[p.getY()][p.getX()] = null;
+                }
+                p.setPosition(newX, newY);
+                grid[newY][newX] = p;
+            } else {
+
+                if (grid[p.getY()][p.getX()] == p) {
+                    grid[p.getY()][p.getX()] = null;
+                }
+            }
+        }
     }
 
     public void printBoard() {
-        System.out.println("--- GAME BOARD ---");
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                Player c = grid[y][x];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Player c = grid[i][j];
                 if (c == null) {
-                    System.out.print(".  "); // Casilla vacía
+                    System.out.print(".  ");
                 } else {
-                    // Imprimimos la primera letra del nombre
-                    // Si es Hunter saldrá 'H', si es Prey saldrá 'P'
                     System.out.print(c.getName().charAt(0) + "  ");
                 }
             }
-            System.out.println(); // Salto de línea al terminar la fila
+            System.out.println();
         }
-        System.out.println("------------------");
+    }
+
+    public void cleanBoard() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
     }
 }

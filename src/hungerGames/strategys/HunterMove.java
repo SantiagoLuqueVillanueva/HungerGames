@@ -1,62 +1,82 @@
 package hungerGames.strategys;
 import hungerGames.models.*;
 
-public class HunterMove implements Move{
-    private double calculateDistance(int x1, int x2, int y1, int y2){
-        double h = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-        return h;
+public class HunterMove implements Move {
+    private double calculateDistance(int x1, int y1, int x2, int y2){ 
+        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
     }
     
     @Override
     public void move(Player me, Board board) {
-        // Variables iniciales.
         Player aim = null;
         double minDistance = Double.MAX_VALUE;
-
-        // Escáner
         Player[][] grid = board.getGrid();
-        Player posiblePrey = null;
-        
+
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                posiblePrey = grid[i][j];
-                // Comprobación de que es una presa
-                if (posiblePrey != null && posiblePrey.getType().equals("Prey")) {
-                    // Calculamos la distancia con esta presa
-                    double distance = calculateDistance(me.getX(), me.getY(), posiblePrey.getX(), posiblePrey.getY());
-                    // Si la presa nueva esta a menos distancia que la anterior, fijamos a esta
+                Player p = grid[i][j];
+                if (p != null && p.getType().equals("Prey")) {
+                    double distance = calculateDistance(me.getX(), me.getY(), p.getX(), p.getY());
                     if (distance < minDistance) {
                         minDistance = distance;
-                        aim = posiblePrey;
+                        aim = p;
                     }
                 }
             }
         }
 
+        int currentX = me.getX();
+        int currentY = me.getY();
+        int nextX = currentX;
+        int nextY = currentY;
+
         if (aim != null) {
-            int currentX = me.getX();
-            int currentY = me.getY();
-            
-            int nextX = currentX;
-            int nextY = currentY;
+            if (aim.getX() > currentX) 
+                nextX++;
+            else if (aim.getX() < currentX) 
+                nextX--;
 
-            // --- EJE X ---
-            if (aim.getX() > currentX) nextX++;
-            else if (aim.getX() < currentX) nextX--;
-
-            // CORRECCIÓN DE BORDES (Para que no se atasque en la pared)
-            if (nextX < 0) nextX = 0; // Se queda en el borde
-            else if (nextX >= board.getWidth()) nextX = board.getWidth() - 1;
-
-            // --- EJE Y ---
-            if (aim.getY() > currentY) nextY++;
-            else if (aim.getY() < currentY) nextY--;
-
-            // CORRECCIÓN DE BORDES
-            if (nextY < 0) nextY = 0;
-            else if (nextY >= board.getHeight()) nextY = board.getHeight() - 1;
-
-            board.moveCharacter(me, nextX, nextY);
+            if (aim.getY() > currentY) 
+                nextY++;
+            else if (aim.getY() < currentY) 
+                nextY--;
+        } else {
+            int dir = (int)(Math.random() * 4);
+            if (dir == 0) 
+                nextX++;
+            else if (dir == 1) 
+                nextX--;
+            else if (dir == 2) 
+                nextY++;
+            else if (dir == 3) 
+                nextY--;
         }
+
+        if (nextX < 0) 
+            nextX = currentX + 1;
+        else if (nextX >= board.getWidth()) 
+            nextX = board.getWidth() - 1;
+
+        if (nextY < 0) 
+            nextY = currentY + 1;
+        else if (nextY >= board.getHeight()) 
+            nextY = board.getHeight() - 1;
+
+        Player nextCell = grid[nextY][nextX];
+        if (nextCell != null && nextCell.getType().equals("Obstacle")) {
+            if (aim == null) {
+                nextX = currentX;
+                nextY = currentY;
+            } else {
+                if (nextX != currentX && nextY != currentY) {
+                    nextY = currentY;
+                } else {
+                    nextX = currentX;
+                    nextY = currentY;
+                }
+            }
+        }
+
+        board.movePlayer(me, nextX, nextY);
     }
 }
