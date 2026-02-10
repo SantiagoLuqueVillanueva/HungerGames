@@ -48,6 +48,7 @@ public class Board {
             grid[newY][newX] = p;
         } 
         else {
+
             if (objective.getType().equals("Obstacle") || objective.getType().equals(p.getType())) {
                 return; 
             }

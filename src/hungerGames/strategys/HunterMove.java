@@ -7,26 +7,26 @@ public class HunterMove implements Move {
     }
     
     @Override
-    public void move(Player me, Board board) {
+    public void move(Player p, Board board) {
         Player aim = null;
         double minDistance = Double.MAX_VALUE;
         Player[][] grid = board.getGrid();
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                Player p = grid[i][j];
-                if (p != null && p.getType().equals("Prey")) {
-                    double distance = calculateDistance(me.getX(), me.getY(), p.getX(), p.getY());
+                Player pos = grid[i][j];
+                if (pos != null && pos.getType().equals("Prey")) {
+                    double distance = calculateDistance(p.getX(), p.getY(), pos.getX(), pos.getY());
                     if (distance < minDistance) {
                         minDistance = distance;
-                        aim = p;
+                        aim = pos;
                     }
                 }
             }
         }
 
-        int currentX = me.getX();
-        int currentY = me.getY();
+        int currentX = p.getX();
+        int currentY = p.getY();
         int nextX = currentX;
         int nextY = currentY;
 
@@ -77,6 +77,6 @@ public class HunterMove implements Move {
             }
         }
 
-        board.movePlayer(me, nextX, nextY);
+        board.movePlayer(p, nextX, nextY);
     }
 }

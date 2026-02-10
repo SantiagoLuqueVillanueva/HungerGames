@@ -15,11 +15,11 @@ public class PreyMove implements Move {
 
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                Player ph = grid[i][j];
-                if (ph != null && ph.getType().equals("Hunter")) {
-                    double distance = calculateDistance(p.getX(), p.getY(), ph.getX(), ph.getY());
+                Player pos = grid[i][j];
+                if (p != null && p.getType().equals("Hunter")) {
+                    double distance = calculateDistance(p.getX(), p.getY(), pos.getX(), pos.getY());
                     if (distance < minDistance) {
-                        hunter = ph;
+                        hunter = pos;
                         minDistance = distance;
                     }
                 }
