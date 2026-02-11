@@ -26,15 +26,15 @@ public class HungerGames {
         Move hunterStrategy = new HunterMove();
         Move preyStrategy = new PreyMove();
 
-        this.hunter1 = new Hunter("H1", (int)(Math.random() * 20), (int)(Math.random() * 20), hunterStrategy);
-        this.hunter2 = new Hunter("H2", (int)(Math.random() * 20), (int)(Math.random() * 20), hunterStrategy);
-        this.hunter3 = new Hunter("H3", (int)(Math.random() * 20), (int)(Math.random() * 20), hunterStrategy);
-        this.hunter4 = new Hunter("H4", (int)(Math.random() * 20), (int)(Math.random() * 20), hunterStrategy);
+        this.hunter1 = new Hunter("H", (int)(Math.random() * 20), (int)(Math.random() * 20), hunterStrategy);
+        this.hunter2 = new Hunter("H", (int)(Math.random() * 20), (int)(Math.random() * 20), hunterStrategy);
+        this.hunter3 = new Hunter("H", (int)(Math.random() * 20), (int)(Math.random() * 20), hunterStrategy);
+        this.hunter4 = new Hunter("H", (int)(Math.random() * 20), (int)(Math.random() * 20), hunterStrategy);
 
-        this.prey1 = new Prey("P1", (int)(Math.random() * 20), (int)(Math.random() * 20), preyStrategy);
-        this.prey2 = new Prey("P2", (int)(Math.random() * 20), (int)(Math.random() * 20), preyStrategy);
-        this.prey3 = new Prey("P3", (int)(Math.random() * 20), (int)(Math.random() * 20), preyStrategy);
-        this.prey4 = new Prey("P4", (int)(Math.random() * 20), (int)(Math.random() * 20), preyStrategy);
+        this.prey1 = new Prey("P", (int)(Math.random() * 20), (int)(Math.random() * 20), preyStrategy);
+        this.prey2 = new Prey("P", (int)(Math.random() * 20), (int)(Math.random() * 20), preyStrategy);
+        this.prey3 = new Prey("P", (int)(Math.random() * 20), (int)(Math.random() * 20), preyStrategy);
+        this.prey4 = new Prey("P", (int)(Math.random() * 20), (int)(Math.random() * 20), preyStrategy);
 
         this.obstacle1 = new Obstacle("#", (int)(Math.random() * 20), (int)(Math.random() * 20), null);
         this.obstacle2 = new Obstacle("#", (int)(Math.random() * 20), (int)(Math.random() * 20), null);
@@ -66,17 +66,88 @@ public class HungerGames {
             board.cleanBoard(); 
             board.printBoard();
 
-            if (isAlive(hunter1)) hunter1.performMove(board);
-            if (isAlive(hunter2)) hunter2.performMove(board);
-            if (isAlive(hunter3)) hunter3.performMove(board);
-            if (isAlive(hunter4)) hunter4.performMove(board);
+            if (isAlive(hunter1)) {
+                hunter1.performMove(board);
+            }
+            if (isAlive(hunter2)){
+                hunter2.performMove(board);
+            }
+            if (isAlive(hunter3)){
+                hunter3.performMove(board);
+            }
+            if (isAlive(hunter4)){
+                hunter4.performMove(board);
+            }
 
-            if (isAlive(prey1)) prey1.performMove(board);
-            if (isAlive(prey2)) prey2.performMove(board);
-            if (isAlive(prey3)) prey3.performMove(board);
-            if (isAlive(prey4)) prey4.performMove(board);
+            if (isAlive(prey1)){
+                prey1.performMove(board);
+            }
+            if (isAlive(prey2)){
+                prey2.performMove(board);
+            }
+            if (isAlive(prey3)){
+                prey3.performMove(board);
+            }
+            if (isAlive(prey4)){
+                prey4.performMove(board);
+            }
 
-            Thread.sleep(600);
+            int huntersVivos = 0;
+            int preysVivos = 0;
+
+            // Contamos Hunters
+            if (isAlive(hunter1)){
+                huntersVivos++;
+            }
+            if (isAlive(hunter2)){
+                huntersVivos++;
+            }
+            if (isAlive(hunter3)){
+                huntersVivos++;
+            }
+            if (isAlive(hunter4)){
+                huntersVivos++;
+            }
+
+            // Contamos Preys
+            if (isAlive(prey1)){
+                preysVivos++;
+            }
+            if (isAlive(prey2)){
+                preysVivos++;
+            }
+            if (isAlive(prey3)){
+                preysVivos++;
+            }
+            if (isAlive(prey4)){
+                preysVivos++;
+            }
+
+            if (preysVivos == 0) {
+                board.cleanBoard();
+                board.printBoard(); 
+                
+                System.out.println("\n===================================");
+                System.out.println("   ¡JUEGO TERMINADO!");
+                System.out.println("   Ganaron los: HUNTERS");
+                System.out.println("===================================");
+                break;
+            }
+
+            if (huntersVivos == 0) {
+                board.cleanBoard();
+                board.printBoard();
+                
+                System.out.println("\n===================================");
+                System.out.println("   ¡JUEGO TERMINADO!");
+                System.out.println("   Ganaron los: PREYS");
+                System.out.println("===================================");
+                break;
+            }
+
+            System.out.println("Hunters vivos: " + huntersVivos + " | Preys vivas: " + preysVivos);
+
+            Thread.sleep(400);
         }
     }
 }

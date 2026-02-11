@@ -64,16 +64,10 @@ public class HunterMove implements Move {
 
         Player nextCell = grid[nextY][nextX];
         if (nextCell != null && nextCell.getType().equals("Obstacle")) {
-            if (aim == null) {
-                nextX = currentX;
+            if (nextX != currentX && nextY != currentY) {
                 nextY = currentY;
             } else {
-                if (nextX != currentX && nextY != currentY) {
-                    nextY = currentY;
-                } else {
-                    nextX = currentX;
-                    nextY = currentY;
-                }
+                nextX = currentX; nextY = currentY;
             }
         }
 

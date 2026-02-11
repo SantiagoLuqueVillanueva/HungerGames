@@ -73,17 +73,49 @@ public class Board {
     }
 
     public void printBoard() {
+        final String RESET = "\u001B[0m";
+        final String RED = "\u001B[31m";
+        final String GREEN = "\u001B[32m";
+        final String YELLOW = "\u001B[33m";
+
+        System.out.print("+");
+        for (int i = 0; i < width * 2; i++) {
+            System.out.print("-"); 
+        }
+        System.out.println("+");
+
         for (int i = 0; i < height; i++) {
+            System.out.print("|");
+
             for (int j = 0; j < width; j++) {
-                Player c = grid[i][j];
-                if (c == null) {
-                    System.out.print(".  ");
+                Player p = grid[i][j];
+
+                if (p == null) {
+                    System.out.print("  "); 
                 } else {
-                    System.out.print(c.getName().charAt(0) + "  ");
+                    String color = RESET;
+                    
+                    if (p.getType().equals("Hunter")){
+                        color = RED;
+                    } else if (p.getType().equals("Prey")){
+                        color = GREEN;
+                    } 
+                    else if (p.getType().equals("Obstacle")){
+                        color = YELLOW;
+                    } 
+
+                    System.out.print(color + p.getName() + RESET + " ");
                 }
             }
-            System.out.println();
+            
+            System.out.println("|");
         }
+
+        System.out.print("+");
+        for (int k = 0; k < width * 2; k++) {
+            System.out.print("-");
+        }
+        System.out.println("+");
     }
 
     public void cleanBoard() {
