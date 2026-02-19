@@ -18,7 +18,6 @@ public class HungerGames {
         Move hunterStrategy = new HunterMove();
         Move preyStrategy = new PreyMove();
 
-        // Initialize empty lists
         this.hunters = new ArrayList<>();
         this.preys = new ArrayList<>();
         this.obstacles = new ArrayList<>();
